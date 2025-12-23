@@ -31,13 +31,13 @@ std::vector<pixel> LoadBMP(std::string path)
     }
     char buf_4_bytes[4];
     file.read(buf_4_bytes, 4);
-    uint32_t DIB_header_size = *reinterpret_cast<unsigned long *>(buf_4_bytes);
+    uint32_t DIB_header_size = *reinterpret_cast<uint32_t *>(buf_4_bytes);
     std::vector<char> DIB_header(DIB_header_size - 4);
     file.read(reinterpret_cast<char *>(DIB_header.data()), DIB_header_size - 4);
     uint32_t width = *reinterpret_cast<uint32_t *>(&DIB_header[0]);
     int32_t height = *reinterpret_cast<int32_t *>(&DIB_header[4]);
-    uint32_t bpp = *reinterpret_cast<uint32_t *>(&DIB_header[10]);
-    int8_t flag = 1;
+    uint16_t bpp = *reinterpret_cast<uint16_t *>(&DIB_header[10]);
+    bool flag = true;
     if (bpp != 32)
     {
         throw std::invalid_argument("Only 32 bpp bmp files supported");
@@ -47,7 +47,7 @@ std::vector<pixel> LoadBMP(std::string path)
     if (height < 0)
     {
         height = -height;
-        flag = 0;
+        flag = false;
     }
 
     file.seekg(offset);
@@ -59,8 +59,8 @@ std::vector<pixel> LoadBMP(std::string path)
         for (uint32_t j = 0; j < width; j++)
         {
 
-            file.read(reinterpret_cast<char *>(&buff_px), sizeof(pixel));
-            if (flag == 1)
+            file.read(reinterpret_cast<char *>(&buff_px), 4);
+            if (flag)
             {
                 pixels[(height - 1 - i) * width + j] = buff_px;
             }
