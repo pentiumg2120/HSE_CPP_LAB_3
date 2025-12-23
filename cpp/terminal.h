@@ -4,5 +4,5 @@
 #include "bmp.h"
 
 void renderToTerminal(const std::vector<pixel> &img);
-
+void getPixel(const Image& img, int x, int y, uint8_t& r, uint8_t& g, uint8_t& b);
 #endif
