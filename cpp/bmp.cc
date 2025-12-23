@@ -79,8 +79,8 @@ std::vector<pixel> LoadBMP(std::string path)
     return pixels;
 }
 
-int main()
-{
-    std::string path = "1.bmp";
-    LoadBMP(path);
-}
+// int main()
+// {
+//     std::string path = "1.bmp";
+//     LoadBMP(path);
+// }
