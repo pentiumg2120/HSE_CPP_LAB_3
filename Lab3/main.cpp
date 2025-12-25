@@ -15,13 +15,32 @@ void printImage(std::string path)
     image img = Decode(d, false);
     renderToTerminal(img);
 }
+void pk()
+{
+    std::cout << "Нажмите на любую кнопку, чтобы продолжить..." << std::endl;
+    char a;
+    std::cin >> a;
+}
+void smesharik_select()
+{
+    std::cout << "Введите цифру от 1 до 7" << std::endl;
+    int n;
+    std::cin >> n;
+
+    switch (n)
+    {
+    case 1:
+        smesharik_select();
+        break;
+
+    default:
+        smesharik_select();
+        break;
+    }
+}
 int main()
 {
     std::cout << "Привет! Сегодня ты познакомишься с миром смешариков!\n";
-    printImage("./images/1.babe");
-    std::cout << "Нажимай Enter, чтобы продолжить...\n";
-    char step{};
-    std::cin >> step;
-    printImage("./images/2.babe");
-    std::cout << "Нажимай Enter, чтобы продолжить...\n";
+    printImage("./images/zas1.babe");
+    smesharik_select();
 }
