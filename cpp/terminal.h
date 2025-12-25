@@ -14,7 +14,7 @@ struct Image
 };
 
 bool getTerminalSize(int &cols, int &rows);
-void getPixel(std::vector<pixel> img, int x, int y, int width, int height, uint8_t &r, uint8_t &g, uint8_t &b);
-void renderToTerminal(const std::vector<pixel> &img);
+void getPixel(image &img, int x, int y, uint8_t &r, uint8_t &g, uint8_t &b);
+void renderToTerminal(image &img);
 
 #endif

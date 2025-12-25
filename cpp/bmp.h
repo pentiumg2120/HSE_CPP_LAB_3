@@ -11,6 +11,13 @@ struct pixel
     uint8_t alpha;
 };
 
-std::vector<pixel> LoadBMP(std::string path);
+struct image
+{
+    int width;
+    int height;
+    std::vector<pixel> pixels;
+};
+
+image LoadBMP(std::string path);
 
 #endif

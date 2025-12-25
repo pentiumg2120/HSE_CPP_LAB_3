@@ -4,6 +4,7 @@
 #include "bmp.h"
 #include <vector>
 #include <cstdint>
+#include <string>
 
 struct pixel_YCbCr
 {
@@ -25,7 +26,11 @@ public:
     uint8_t n = 0;
     BitWriter() = default;
     void writeBit(bool bit);
-
+    void writeByte(uint8_t byte);
+    void writeString(std::string s);
+    void writeUint16(uint16_t value);
+    void writeUint32(uint32_t value);
+    void writeVector(std::vector<uint8_t> &vec);
     void flush();
 
     ~BitWriter() = default;
@@ -44,15 +49,27 @@ public:
     }
 
     bool readBit();
+    uint8_t readByte();
 
     ~BitReader() = default;
 };
 
 std::pair<int, int> setBlocksForQuality(int quality);
 pixel_YCbCr rgbToYCbCr(pixel p);
-std::pair<std::vector<std::vector<uint8_t>>, std::pair<int, int>> extractYCbCrPlanes(const std::vector<pixel> &img, int width, int height);
+std::vector<std::vector<uint8_t>> extractYCbCrPlanes(const std::vector<pixel> &img, int width, int height);
 bool canUseBigBlock(std::vector<uint8_t> *plane, int stride, int x0, int y0, int macroBlock, int encQuality);
 std::pair<uint8_t, uint8_t> encodeBlock(std::vector<uint8_t> *plane, int stride, int x0, int y0, int bw, int bh, BitWriter &bwWriter);
-std::vector<uint8_t> Encode(std::vector<pixel>, int quality, bool bw);
-std::vector<pixel> Decode(const std::vector<uint8_t> &data, bool skip_preview);
+
+struct encodedChannel
+{
+    int blockCount;
+    std::vector<uint8_t> sizeBuf;
+    std::vector<uint8_t> typeBuf;
+    std::vector<uint8_t> patternBuf;
+    std::vector<uint8_t> fgVals;
+    std::vector<uint8_t> bgVals;
+};
+encodedChannel encodeChannel(std::vector<uint8_t> &plane, int stride, int w4, int h4, int fullW, int fullH, bool useMacro, int smallBlock, int macroBlock, int encQuality);
+std::vector<uint8_t> Encode(image img, int quality, bool bwmode);
+image Decode(const std::vector<uint8_t> &data, bool skip_preview);
 #endif

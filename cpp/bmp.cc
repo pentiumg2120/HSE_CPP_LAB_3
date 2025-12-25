@@ -6,7 +6,7 @@
 #include <cstdint>
 #include "bmp.h"
 
-std::vector<pixel> LoadBMP(std::string path)
+image LoadBMP(std::string path)
 {
     std::ifstream file(path, std::ios::binary);
 
@@ -76,7 +76,7 @@ std::vector<pixel> LoadBMP(std::string path)
     // std::cout << "Offset: " << offset << std::endl;
     // std::cout << "Width: " << width << " Height: " << height << " BPP: " << bpp << std::endl;
 
-    return pixels;
+    return image{width, height, pixels};
 }
 
 // int main()

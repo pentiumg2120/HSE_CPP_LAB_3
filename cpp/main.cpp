@@ -27,9 +27,10 @@ int main(int argc, char *argv[])
             std::ifstream f(inP, std::ios::binary);
             std::vector<uint8_t> d((std::istreambuf_iterator<char>(f)),
                                    std::istreambuf_iterator<char>());
-            std::vector<pixel> img = Decode(d, false);
+            image img = Decode(d, false);
             renderToTerminal(img);
         }
+
         return 0;
     }
     int q = 70;
@@ -48,7 +49,7 @@ int main(int argc, char *argv[])
             bw = true;
     }
 
-    std::vector<pixel> img = LoadBMP(inP);
+    image img = LoadBMP(inP);
     std::vector<uint8_t> enc = Encode(img, q, bw);
     std::string outP = std::filesystem::path(inP).replace_extension(".babe").string();
     std::ofstream f(outP, std::ios::binary);
