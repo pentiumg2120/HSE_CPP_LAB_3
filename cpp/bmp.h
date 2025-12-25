@@ -1,6 +1,8 @@
 #ifndef BMP_H
 #define BMP_H
-
+#include <cstdint>
+#include <vector>
+#include <string>
 struct pixel
 {
     uint8_t blue;

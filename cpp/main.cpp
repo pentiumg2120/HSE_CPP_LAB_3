@@ -18,16 +18,16 @@ int main(int argc, char *argv[])
         return 1;
     }
     std::string inP = argv[1];
-    std::string ext = toLower(std::filesystem::path(inP).extension().string());
+    std::string ext = std::filesystem::path(inP).extension().string();
 
     if (ext == ".babe")
     {
-        if (args > 2 && std::string(argv[2]) == "-t")
+        if (argc > 2 && std::string(argv[2]) == "-t")
         {
             std::ifstream f(inP, std::ios::binary);
             std::vector<uint8_t> d((std::istreambuf_iterator<char>(f)),
                                    std::istreambuf_iterator<char>());
-            Image img = Decode(d, false);
+            std::vector<pixel> img = Decode(d, false);
             renderToTerminal(img);
         }
         return 0;
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
             bw = true;
     }
 
-    std::vector<pixel> img = loadBMP(inP);
+    std::vector<pixel> img = LoadBMP(inP);
     std::vector<uint8_t> enc = Encode(img, q, bw);
     std::string outP = std::filesystem::path(inP).replace_extension(".babe").string();
     std::ofstream f(outP, std::ios::binary);
