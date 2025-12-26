@@ -4,7 +4,7 @@
 
 void renderToTerminal(image &img)
 {
-    int termW = 100, termH = 100;
+    int termW = 80, termH = 80;
     // getTerminalSize(termW, termH); in future
     int width = img.width;
     int height = img.height;
