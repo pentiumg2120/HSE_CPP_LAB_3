@@ -4,17 +4,17 @@
 #include <iostream>
 #include <string>
 
-
-class Smesharik {
+class Smesharik
+{
 protected:
     std::string name;
+
 public:
-    Smesharik(const std::string& n) : name(n) {}
+    Smesharik(const std::string &n) : name(n) {}
 
     std::string getName() const { return name; }
 
     virtual void speak() = 0;
-    virtual void eat() = 0;
     virtual ~Smesharik() = default;
 };
 #endif
